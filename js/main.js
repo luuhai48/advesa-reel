@@ -1,5 +1,11 @@
+function loading() {
+  document.getElementById("main").classList.add("loading");
+}
+function loadDone() {
+  document.getElementById("main").classList.remove("loading");
+}
+
 window.onload = function () {
-  // add eventListener for keydown
   document.addEventListener("keydown", function (e) {
     switch (e.keyCode) {
       case 37: //LEFT arrow
@@ -20,4 +26,16 @@ window.onload = function () {
         break;
     }
   });
+
+  var main = document.getElementById("main");
+
+  var gid = localStorage.getItem("gid");
+  if (!gid) {
+    fetch("components/id_input.html").then(async (res) => {
+      var html = await res.text();
+      main.innerHTML = html;
+      loadDone();
+    });
+    return;
+  }
 };

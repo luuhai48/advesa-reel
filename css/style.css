@@ -29,7 +29,7 @@ button {
   user-select: none;
   padding: 1rem 2rem;
   border-radius: 1.5rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -56,4 +56,41 @@ input {
 
 .spacer {
   flex: 1;
+}
+
+/* ============== Styles ================ */
+
+#main {
+  min-height: 100vh;
+  width: 100%;
+  background-color: white;
+}
+#main:before {
+  content: "Loading";
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 5rem;
+  justify-content: center;
+  align-items: center;
+  animation-name: spin;
+  animation-duration: 3000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+#main.loading:before {
+  display: flex;
+}
+
+/* ============= Animations ============ */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

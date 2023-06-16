@@ -1,0 +1,27 @@
+<style>
+  .id-input,
+  .id-button {
+    margin-top: 3rem;
+  }
+
+  .input-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70rem;
+    text-align: center;
+  }
+</style>
+<form class="input-box">
+  <h1>Please enter Google drive public folder ID</h1>
+  <input
+    type="text"
+    class="id-input"
+    autofocus
+    placeholder="e.g: 1ABQWoOABiV140oe-tO1abcdYSGK1Akqk"
+    name="id-input"
+    required
+  />
+  <button class="id-button" type="submit">Enter</button>
+</form>

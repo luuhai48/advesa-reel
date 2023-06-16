@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://yourdomain/AdvesaReel" version="1.0.0" viewmodes="maximized">
-    <tizen:application id="1qNTiCZ3K3.AdvesaReel" package="1qNTiCZ3K3" required_version="2.1"/>
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets"
+    id="http://yourdomain/AdvesaReel" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="1qNTiCZ3K3.AdvesaReel" package="1qNTiCZ3K3" required_version="2.1" />
     <author href="https://luuhai48.com" email="luuhai.hn48@gmail.com">luuhai48</author>
-    <content src="index.html"/>
-    <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
-    <icon src="icon.png"/>
+    <content src="index.html" />
+    <feature name="http://tizen.org/feature/screen.size.normal.1080.1920" />
+    <icon src="icon.png" />
     <name>AdvesaReel</name>
-    <tizen:profile name="tv-samsung"/>
-    <tizen:setting screen-orientation="landscape" context-menu="enable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="disable"/>
+    <tizen:profile name="tv-samsung" />
+    <tizen:setting screen-orientation="landscape" context-menu="enable" background-support="disable"
+        encryption="disable" install-location="auto" hwkey-event="disable" />
+    <access origin="*" subdomains="true" />
 </widget>

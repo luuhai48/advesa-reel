@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
   .id-input,
   .id-button {
     margin-top: 3rem;
@@ -24,4 +24,41 @@
     required
   />
   <button class="id-button" type="submit">Enter</button>
-</form>
+</form> -->
+<video
+  id="video"
+  width="320"
+  height="240"
+  controls
+  loop
+  autoplay
+  preload="auto"
+  muted
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
+></video>
+<div>
+  <button id="v-play" type="button">play</button>
+  <button id="v-pause" type="button">pause</button>
+</div>
+<script>
+  var video = document.getElementById("video");
+
+  var play_button = document.getElementById("v-play");
+  var pause_button = document.getElementById("v-pause");
+
+  play_button.addEventListener(
+    "click",
+    function () {
+      video.play(); /* Play movie */
+    },
+    false
+  );
+
+  pause_button.addEventListener(
+    "click",
+    function () {
+      video.pause(); /* Pause movie */
+    },
+    false
+  );
+</script>

@@ -17,12 +17,14 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ============== Utilities ================ */
 
 button {
   border: 0.1rem solid;
+  outline: none;
   cursor: pointer;
   transition: background-color 0.2s;
   background-color: inherit;
@@ -33,15 +35,26 @@ button {
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: all 0.3s;
 }
 button:hover {
   background-color: rgba(0, 0, 0, 0.1) !important;
+}
+button:focus {
+  box-shadow: 0px 0px 8px 2px blue;
 }
 button.no-border {
   border: none;
 }
 button.rounded {
   border-radius: 50%;
+}
+button.back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 98;
+  padding: 5px;
 }
 
 input {
@@ -52,10 +65,244 @@ input {
   outline: none;
   border: 0.1rem solid rgba(0, 0, 0, 0.4);
   border-radius: 1.5rem;
+  transition: all 0.3s;
+}
+input:focus {
+  box-shadow: 0px 0px 8px 2px blue;
 }
 
 .spacer {
   flex: 1;
+}
+
+#toasts {
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+}
+.toast {
+  border-radius: 12px;
+  background: #fff;
+  padding: 20px 35px 20px 25px;
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transform: translateX(calc(100% + 30px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+.toast:not(:first-child) {
+  margin-top: 20px;
+}
+.toast.active {
+  transform: translateX(0%);
+}
+.toast .toast-content {
+  display: flex;
+  align-items: center;
+}
+.toast-content .message {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+.toast-content .check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #04aa6d;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 50%;
+}
+.toast .message .text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+}
+.toast .message .text.text-1 {
+  font-weight: 600;
+  color: #333;
+}
+.toast .message .text.text-2 {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.toast .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 5px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.toast .close:hover {
+  opacity: 1;
+}
+.toast .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+}
+.toast .progress:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #04aa6d;
+}
+.toast .progress.active:before {
+  animation: progress 5s linear forwards;
+}
+.toast.error .toast-content .check {
+  background-color: #f44336;
+}
+.toast.error .progress:before {
+  background-color: #f44336;
+}
+.toast.info .toast-content .check {
+  background-color: #2196f3;
+}
+.toast.info .progress:before {
+  background-color: #2196f3;
+}
+.toast.warning .toast-content .check {
+  background-color: #ff9800;
+}
+.toast.warning .progress:before {
+  background-color: #ff9800;
+}
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}
+
+.gg-close {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(1);
+  width: 22px;
+  height: 22px;
+  border: 2px solid transparent;
+  border-radius: 40px;
+}
+.gg-close::after,
+.gg-close::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  transform: rotate(45deg);
+  border-radius: 5px;
+  top: 8px;
+  left: 1px;
+}
+.gg-close::after {
+  transform: rotate(-45deg);
+}
+
+.gg-close-o {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(1.5);
+  width: 22px;
+  height: 22px;
+  border: 2px solid;
+  border-radius: 40px;
+}
+.gg-close-o::after,
+.gg-close-o::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  background: currentColor;
+  transform: rotate(45deg);
+  border-radius: 5px;
+  top: 8px;
+  left: 3px;
+}
+.gg-close-o::after {
+  transform: rotate(-45deg);
+}
+
+.gg-check-o {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(1.5);
+  width: 22px;
+  height: 22px;
+  border: 2px solid;
+  border-radius: 100px;
+}
+.gg-check-o::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  left: 3px;
+  top: -1px;
+  width: 6px;
+  height: 10px;
+  border-color: currentColor;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  transform-origin: bottom left;
+  transform: rotate(45deg);
+}
+
+.gg-chevron-left-o {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(1.5);
+  width: 22px;
+  height: 22px;
+  border: 2px solid;
+  border-radius: 100px;
+}
+.gg-chevron-left-o::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(45deg);
+  left: 7px;
+  top: 6px;
+}
+
+.invisible {
+  border: none;
+  background-color: transparent;
+  color: transparent;
+}
+.invisible:hover {
+  background-color: transparent;
+  color: transparent;
+}
+.invisible:focus {
+  color: inherit;
 }
 
 /* ============== Styles ================ */
@@ -66,6 +313,17 @@ input {
   background-color: white;
 }
 #main:before {
+  content: "";
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+#main:after {
   content: "Loading";
   display: none;
   position: fixed;
@@ -80,8 +338,13 @@ input {
   animation-duration: 3000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+  z-index: 101;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
 }
-#main.loading:before {
+#main.loading:before,
+#main.loading:after {
   display: flex;
 }
 

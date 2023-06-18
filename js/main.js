@@ -8,6 +8,14 @@ var eventListeners = [];
 var historyStack = [];
 var selectableElements = [];
 var gid = localStorage.getItem("gid");
+var storageData = localStorage.getItem("data");
+if (storageData) {
+  data = JSON.parse(storageData);
+}
+var selected = localStorage.getItem("selected");
+
+var imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+var videoMimeTypes = ["video/mp4", "video/mkv"];
 
 function loading() {
   main.classList.add("loading");
@@ -139,6 +147,7 @@ async function fetchFolderInfo(gid) {
 
     data = json;
     localStorage.setItem("gid", gid);
+    localStorage.setItem("data", JSON.stringify(data));
 
     await loadComponent("files_select");
   } catch (e) {
@@ -158,7 +167,7 @@ function goBack() {
   historyStack.pop();
 
   if (historyStack.length) {
-    var item = historyStack[historyStack.length - 1];
+    var item = historyStack.pop();
     loadComponent(item);
     if (item === "id_input") {
       localStorage.removeItem("gid");
@@ -187,6 +196,12 @@ function secretInputHandler(e) {
   }
 }
 
+function selectFile(elem) {
+  selected = elem.dataset.fileId;
+  localStorage.setItem("selected", selected);
+  loadComponent("file_viewer");
+}
+
 window.onload = async function () {
   main = document.getElementById("main");
   scripts = document.getElementById("scripts");
@@ -213,7 +228,7 @@ window.onload = async function () {
         selectNext();
         break;
       case 13: //OK button
-        console.log("enter");
+        console.log("OK");
         break;
       case 10009: //RETURN button
         goBack();
@@ -224,8 +239,14 @@ window.onload = async function () {
     }
   });
 
-  await loadComponent("id_input");
-  if (gid) {
-    await fetchFolderInfo(gid);
+  if (selected && data?.length) {
+    return await loadComponent("file_viewer");
   }
+
+  if (gid) {
+    historyStack.push("id_input");
+    return await fetchFolderInfo(gid);
+  }
+
+  await loadComponent("id_input");
 };

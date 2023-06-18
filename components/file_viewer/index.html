@@ -1,0 +1,22 @@
+<style>
+  #file-display {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #file-display img {
+    max-width: calc(100% - 20px);
+  }
+  #file-display video {
+    box-shadow: 0 0px 5px 2px rgba(0, 0, 0, 0.4);
+  }
+</style>
+
+<button class="back no-border" title="Go back" onclick="goBack()">
+  <i class="gg-chevron-left-o"></i>
+</button>
+
+<div id="file-display"></div>

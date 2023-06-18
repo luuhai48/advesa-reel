@@ -1,10 +1,13 @@
+selected = null;
+localStorage.removeItem("selected");
+
 if (data.length) {
   var filesList = document.getElementById("files");
   var newFiles = [];
 
   data.forEach((file) => {
-    var elem = document.createElement("a");
-    elem.setAttribute("href", "#");
+    var elem = document.createElement("button");
+    elem.setAttribute("onclick", "selectFile(this)");
     elem.dataset.fileId = file.id;
     elem.classList.add("file");
     elem.style.backgroundImage = `url(${file.thumbnailLink})`;

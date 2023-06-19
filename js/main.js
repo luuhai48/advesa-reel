@@ -8,10 +8,6 @@ var eventListeners = [];
 var historyStack = [];
 var selectableElements = [];
 var gid = localStorage.getItem("gid");
-var storageData = localStorage.getItem("data");
-if (storageData) {
-  data = JSON.parse(storageData);
-}
 var selected = localStorage.getItem("selected");
 
 var imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
@@ -147,7 +143,14 @@ async function fetchFolderInfo(gid) {
 
     data = json;
     localStorage.setItem("gid", gid);
-    localStorage.setItem("data", JSON.stringify(data));
+
+    if (selected) {
+      var file = data.find((f) => f.id === selected);
+      if (file) {
+        historyStack.push("files_select");
+        return await loadComponent("file_viewer");
+      }
+    }
 
     await loadComponent("files_select");
   } catch (e) {
@@ -176,8 +179,8 @@ function goBack() {
 }
 
 function secretInputHandler(e) {
-  // Press OK - 10 times
-  if (e.keyCode === 13) {
+  // Press OK or number 0 - 10 times
+  if (e.keyCode === 13 || e.keyCode === 48) {
     clearTimeout(secretTimer);
 
     secretCount += 1;
@@ -185,7 +188,11 @@ function secretInputHandler(e) {
     if (secretCount === 10) {
       var id_input = document.getElementById("id-input");
       if (id_input) {
+        id_input.disabled = true;
         id_input.value = "1PXQWoOPXiV140oe-tO0svpjYSGK1Akqk";
+        setTimeout(() => {
+          id_input.removeAttribute("disabled");
+        }, 100);
       }
       return;
     }
@@ -238,10 +245,6 @@ window.onload = async function () {
         break;
     }
   });
-
-  if (selected && data?.length) {
-    return await loadComponent("file_viewer");
-  }
 
   if (gid) {
     historyStack.push("id_input");

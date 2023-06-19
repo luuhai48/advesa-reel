@@ -10,7 +10,12 @@ body {
   padding: 0;
 }
 html {
-  font-size: 62.5%;
+  font-size: 125%;
+}
+@media screen and (max-width: 1900px) {
+  html {
+    font-size: 62.5%;
+  }
 }
 body {
   font-size: 1.6rem;
@@ -35,12 +40,13 @@ button {
   justify-content: center;
   position: relative;
   transition: all 0.3s;
+  font-size: 1.4rem;
 }
 button:hover {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
 button:focus {
-  box-shadow: 0px 0px 8px 2px blue;
+  box-shadow: 0px 0px 0.8rem 0.2rem blue;
 }
 button.no-border {
   border: none;
@@ -50,10 +56,10 @@ button.rounded {
 }
 button.back {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 2rem;
+  left: 2rem;
   z-index: 98;
-  padding: 5px;
+  padding: 0.5rem;
 }
 
 input {
@@ -65,9 +71,10 @@ input {
   border: 0.1rem solid rgba(0, 0, 0, 0.4);
   border-radius: 1.5rem;
   transition: all 0.3s;
+  font-size: 1.4rem;
 }
 input:focus {
-  box-shadow: 0px 0px 8px 2px blue;
+  box-shadow: 0px 0px 0.8rem 0.2rem blue;
 }
 
 .spacer {
@@ -76,22 +83,22 @@ input:focus {
 
 #toasts {
   position: fixed;
-  top: 25px;
-  right: 30px;
+  top: 2.5rem;
+  right: 3rem;
   display: flex;
   flex-direction: column;
 }
 .toast {
-  border-radius: 12px;
+  border-radius: 1.2rem;
   background: #fff;
-  padding: 20px 35px 20px 25px;
-  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.3);
+  padding: 2rem 3.5rem 2rem 2.5rem;
+  box-shadow: 0 0.6rem 2rem -0.5rem rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  transform: translateX(calc(100% + 30px));
+  transform: translateX(calc(100% + 3rem));
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
 }
 .toast:not(:first-child) {
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 .toast.active {
   transform: translateX(0%);
@@ -103,7 +110,7 @@ input:focus {
 .toast-content .message {
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
+  margin: 0 2rem;
 }
 .toast-content .check {
   display: flex;
@@ -111,11 +118,11 @@ input:focus {
   justify-content: center;
   background-color: #04aa6d;
   color: #fff;
-  font-size: 20px;
+  font-size: 2rem;
   border-radius: 50%;
 }
 .toast .message .text {
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 400;
   color: #666666;
 }
@@ -124,7 +131,7 @@ input:focus {
   color: #333;
 }
 .toast .message .text.text-2 {
-  max-width: 250px;
+  max-width: 25rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -133,9 +140,9 @@ input:focus {
 }
 .toast .close {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  padding: 5px;
+  top: 1rem;
+  right: 1.5rem;
+  padding: 0.5rem;
   cursor: pointer;
   opacity: 0.7;
 }
@@ -146,7 +153,7 @@ input:focus {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 3px;
+  height: 0.3rem;
   width: 100%;
 }
 .toast .progress:before {
@@ -190,10 +197,10 @@ input:focus {
   position: relative;
   display: block;
   transform: scale(1);
-  width: 22px;
-  height: 22px;
-  border: 2px solid transparent;
-  border-radius: 40px;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 4rem;
 }
 .gg-close::after,
 .gg-close::before {
@@ -201,13 +208,13 @@ input:focus {
   display: block;
   box-sizing: border-box;
   position: absolute;
-  width: 16px;
-  height: 2px;
+  width: 1.6rem;
+  height: 0.2rem;
   background: currentColor;
   transform: rotate(45deg);
-  border-radius: 5px;
-  top: 8px;
-  left: 1px;
+  border-radius: 0.5rem;
+  top: 0.8rem;
+  left: 0.1rem;
 }
 .gg-close::after {
   transform: rotate(-45deg);
@@ -218,10 +225,10 @@ input:focus {
   position: relative;
   display: block;
   transform: scale(1.5);
-  width: 22px;
-  height: 22px;
-  border: 2px solid;
-  border-radius: 40px;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0.2rem solid;
+  border-radius: 4rem;
 }
 .gg-close-o::after,
 .gg-close-o::before {
@@ -229,13 +236,13 @@ input:focus {
   display: block;
   box-sizing: border-box;
   position: absolute;
-  width: 12px;
-  height: 2px;
+  width: 1.2rem;
+  height: 0.2rem;
   background: currentColor;
   transform: rotate(45deg);
-  border-radius: 5px;
-  top: 8px;
-  left: 3px;
+  border-radius: 0.5rem;
+  top: 0.8rem;
+  left: 0.3rem;
 }
 .gg-close-o::after {
   transform: rotate(-45deg);
@@ -246,22 +253,22 @@ input:focus {
   position: relative;
   display: block;
   transform: scale(1.5);
-  width: 22px;
-  height: 22px;
-  border: 2px solid;
-  border-radius: 100px;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0.2rem solid;
+  border-radius: 10rem;
 }
 .gg-check-o::after {
   content: "";
   display: block;
   box-sizing: border-box;
   position: absolute;
-  left: 3px;
-  top: -1px;
-  width: 6px;
-  height: 10px;
+  left: 0.3rem;
+  top: -0.1rem;
+  width: 0.6rem;
+  height: 1rem;
   border-color: inherit;
-  border-width: 0 2px 2px 0;
+  border-width: 0 0.2rem 0.2rem 0;
   border-style: solid;
   transform-origin: bottom left;
   transform: rotate(45deg);
@@ -272,23 +279,23 @@ input:focus {
   position: relative;
   display: block;
   transform: scale(1.5);
-  width: 22px;
-  height: 22px;
-  border: 2px solid;
-  border-radius: 100px;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0.2rem solid;
+  border-radius: 10rem;
 }
 .gg-chevron-left-o::after {
   content: "";
   display: block;
   box-sizing: border-box;
   position: absolute;
-  width: 6px;
-  height: 6px;
-  border-bottom: 2px solid;
-  border-left: 2px solid;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-bottom: 0.2rem solid;
+  border-left: 0.2rem solid;
   transform: rotate(45deg);
-  left: 7px;
-  top: 6px;
+  left: 0.7rem;
+  top: 0.6rem;
 }
 
 /* ============== Styles ================ */
@@ -327,7 +334,7 @@ input:focus {
   z-index: 101;
   color: white;
   font-weight: bold;
-  text-shadow: 2px 2px 4px #000000;
+  text-shadow: 0.2rem 0.2rem 0.4rem #000000;
 }
 #main.loading:before,
 #main.loading:after {
@@ -335,7 +342,7 @@ input:focus {
 }
 
 #files {
-  padding: 70px 50px;
+  padding: 7rem 5rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -343,10 +350,10 @@ input:focus {
 .file {
   display: block;
   outline: none;
-  width: 240px;
-  height: 140px;
-  border: 1px solid #000;
-  border-radius: 10px;
+  width: 24rem;
+  height: 12rem;
+  border-radius: 1rem;
+  border: 0.1rem solid #000;
   transition: all 0.3s;
   position: relative;
   overflow: hidden;
@@ -357,10 +364,10 @@ input:focus {
 }
 .file .icon {
   position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
+  top: 0.3rem;
+  left: 0.3rem;
+  width: 2rem;
+  height: 2rem;
   z-index: 10;
 }
 .file > span {
@@ -370,13 +377,13 @@ input:focus {
   bottom: 0;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
-  font-size: 12px;
-  padding: 0 4px;
+  font-size: 1.2rem;
+  padding: 0 0.4rem;
+  padding: 0 0.8rem;
 }
-
 .file.selected,
 .file:focus {
-  box-shadow: 0px 0px 8px 2px blue;
+  box-shadow: 0px 0px 0.8rem 0.2rem blue;
 }
 
 #file-display {
@@ -388,10 +395,10 @@ input:focus {
 }
 
 #file-display img {
-  max-width: calc(100% - 20px);
+  max-width: calc(100% - 2rem);
 }
 #file-display video {
-  box-shadow: 0 0px 5px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0px 0.5rem 0.2rem rgba(0, 0, 0, 0.4);
 }
 
 .id-input,

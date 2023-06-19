@@ -15,99 +15,105 @@ var videoMimeTypes = ["video/mp4", "video/mkv"];
 
 var components = {
   id_input: {
-    html:
-      '<form class="input-box" id="id-input-form" method="POST">\n' +
-      "<h1>Please enter Google drive public folder ID</h1>\n" +
-      "<input\n" +
-      'type="text"\n' +
-      'class="id-input"\n' +
-      "autofocus\n" +
-      'placeholder="e.g: 1ABQWoOABiV140oe-xxxxxxxxxxxxxxxx"\n' +
-      'name="id-input"\n' +
-      'id="id-input"\n' +
-      "required\n" +
-      "/>\n" +
-      '<button class="id-button" type="submit">Enter</button>\n' +
-      "</form>",
-    js:
-      'if (gid && gid !== "") {\n' +
-      'document.getElementById("id-input").value = gid;\n' +
-      "}\n" +
-      'document.getElementById("id-input-form").onsubmit = function (e) {\n' +
-      "e.preventDefault();\n" +
-      'var gid = document.getElementById("id-input").value;\n' +
-      "fetchFolderInfo(gid);\n" +
-      "};\n" +
-      'document.addEventListener("keydown", secretInputHandler);\n' +
-      'eventListeners.push({ event: "keydown", handler: secretInputHandler });',
+    html: `<form class="input-box" id="id-input-form" method="POST">
+<h1>Please enter Google drive public folder ID</h1>
+<input
+  type="text"
+  class="id-input"
+  autofocus
+  placeholder="e.g: 1ABQWoOABiV140oe-xxxxxxxxxxxxxxxx"
+  name="id-input"
+  id="id-input"
+  required
+/>
+<button class="id-button" type="submit">Enter</button>
+</form>`,
+    js: `if (gid && gid !== "") {
+  document.getElementById("id-input").value = gid;
+}
+
+document.getElementById("id-input-form").onsubmit = function (e) {
+  e.preventDefault();
+  var gid = document.getElementById("id-input").value;
+  fetchFolderInfo(gid);
+};
+document.addEventListener("keydown", secretInputHandler);
+eventListeners.push({ event: "keydown", handler: secretInputHandler });`,
   },
 
   files_select: {
-    html:
-      '<button class="back no-border" title="Go back" onclick="goBack()">\n' +
-      '<i class="gg-chevron-left-o"></i>\n' +
-      "</button>\n" +
-      '<div id="files"></div>',
-    js:
-      "selected = null;\n" +
-      'localStorage.removeItem("selected");\n' +
-      "if (data.length) {\n" +
-      'var filesList = document.getElementById("files");\n' +
-      "var i = 0;\n" +
-      "for (i = 0; i < data.length; i++) {\n" +
-      "var file = data[i];\n" +
-      'var elem = document.createElement("button");\n' +
-      'elem.setAttribute("onclick", "selectFile(this)");\n' +
-      "elem.dataset.fileId = file.id;\n" +
-      'elem.classList.add("file");\n' +
-      'elem.style.backgroundImage = "url(" + file.thumbnailLink + ")";\n' +
-      'var icon = document.createElement("img");\n' +
-      'icon.classList.add("icon");\n' +
-      "icon.src = file.iconLink;\n" +
-      "elem.appendChild(icon);\n" +
-      'var title = document.createElement("span");\n' +
-      "title.textContent = file.title;\n" +
-      "elem.appendChild(title);\n" +
-      "filesList.appendChild(elem);\n" +
-      "}\n" +
-      "}",
+    html: `<button class="back no-border" title="Go back" onclick="goBack()">
+  <i class="gg-chevron-left-o"></i>
+</button>
+
+<div id="files"></div>`,
+    js: `selected = null;
+localStorage.removeItem("selected");
+
+if (data.length) {
+  var filesList = document.getElementById("files");
+  var newFiles = [];
+
+  data.forEach((file) => {
+    var elem = document.createElement("button");
+    elem.setAttribute("onclick", "selectFile(this)");
+    elem.dataset.fileId = file.id;
+    elem.classList.add("file");
+    elem.style.backgroundImage = "url(" + file.thumbnailLink + ")";
+
+    var icon = document.createElement("img");
+    icon.classList.add("icon");
+    icon.src = file.iconLink;
+    elem.appendChild(icon);
+
+    var title = document.createElement("span");
+    title.textContent = file.title;
+    elem.appendChild(title);
+
+    newFiles.push(elem);
+  });
+
+  filesList.append(...newFiles);
+}`,
   },
 
   file_viewer: {
-    html:
-      '<button class="back no-border" title="Go back" onclick="goBack()">\n' +
-      '<i class="gg-chevron-left-o"></i>\n' +
-      "</button>\n" +
-      '<div id="file-display"></div>',
-    js:
-      'historyStack = ["id_input", "files_select"];\n' +
-      "var file = data.find(function (f) {\n" +
-      "return f.id === selected;\n" +
-      "});\n" +
-      "if (!file) {\n" +
-      "goBack();\n" +
-      "} else {\n" +
-      "if (imageMimeTypes.includes(file.mimeType)) {\n" +
-      'var img = document.createElement("img");\n' +
-      "img.src = file.webContentLink;\n" +
-      'document.getElementById("file-display").appendChild(img);\n' +
-      "} else if (videoMimeTypes.includes(file.mimeType)) {\n" +
-      'var vid = document.createElement("video");\n' +
-      "vid.controls = false;\n" +
-      "vid.autoplay = true;\n" +
-      "vid.controls = true;\n" +
-      'vid.preload = "auto";\n' +
-      "vid.loop = true;\n" +
-      "vid.width = 1280;\n" +
-      "vid.height = 720;\n" +
-      "vid.src = file.webContentLink;\n" +
-      'document.getElementById("file-display").appendChild(vid);\n' +
-      "vid.webkitRequestFullScreen();\n" +
-      "} else {\n" +
-      'historyStack = ["id_input"];\n' +
-      'loadComponent("files_select");\n' +
-      "}\n" +
-      "}",
+    html: `
+    <button class="back no-border" title="Go back" onclick="goBack()">
+      <i class="gg-chevron-left-o"></i>
+    </button>
+
+    <div id="file-display"></div>`,
+    js: `historyStack = ["id_input", "files_select"];
+var file = data.find((f) => f.id === selected);
+if (!file) {
+  goBack();
+} else {
+  if (imageMimeTypes.includes(file.mimeType)) {
+    var img = document.createElement("img");
+    img.src = file.webContentLink;
+
+    document.getElementById("file-display").appendChild(img);
+  } else if (videoMimeTypes.includes(file.mimeType)) {
+    var vid = document.createElement("video");
+    vid.controls = false;
+    vid.autoplay = true;
+    vid.controls = true;
+    vid.preload = "auto";
+    vid.loop = true;
+    vid.width = 1280;
+    vid.height = 720;
+    vid.src = file.webContentLink;
+
+    document.getElementById("file-display").appendChild(vid);
+    vid.webkitRequestFullScreen();
+  } else {
+    historyStack = ["id_input"];
+    loadComponent("files_select").then(() => {
+      notify("error", "Error", "File type not supported: " + file.mimeType);
+    });
+  }
+}`,
   },
 };
 
@@ -198,6 +204,12 @@ function loadComponent(name) {
     (!document.activeElement || document.activeElement.tagName === "BODY")
   ) {
     document.activeElement.blur();
+    if (selectableElements[0].classList.contains("back")) {
+      if (selectableElements[1]) {
+        selectableElements[1].focus();
+        return;
+      }
+    }
     selectableElements[0].focus();
   }
 }
@@ -205,35 +217,15 @@ function loadComponent(name) {
 function notify(status, title, msg) {
   var toast = document.createElement("div");
   toast.classList.add("toast", "active", status);
-
-  var content = document.createElement("div");
-  content.classList.add("toast-content");
-
-  var iconCheck = document.createElement("i");
-  iconCheck.classList.add("gg-check-o check");
-
-  var message = document.createElement("div");
-  message.classList.add("message");
-
-  var text1 = document.createElement("span");
-  text1.classList.add("text", "text-1");
-  text1.textContent = title;
-
-  var text2 = document.createElement("span");
-  text2.classList.add("text", "text-2");
-  text2.textContent = msg;
-  message.append(text1, text2);
-
-  content.append(iconCheck, message);
-
-  var iconClose = document.createElement("i");
-  iconClose.classList.add("gg-close", "close");
-
-  var progress = document.createElement("div");
-  progress.classList.add("progress", "active");
-
-  toast.append(content, iconClose, progress);
-
+  toast.innerHTML = `<div class="toast-content">
+  <i class="gg-check-o check"></i>
+  <div class="message">
+    <span class="text text-1">${title}</span>
+    <span class="text text-2">${message}</span>
+  </div>
+</div>
+<i class="gg-close close"></i>
+<div class="progress active"></div>`;
   toasts.appendChild(toast);
 
   setTimeout(function () {
@@ -264,15 +256,15 @@ function fetchFolderInfo(gid) {
         data = json;
         localStorage.setItem("gid", gid);
 
-        if (selected) {
-          var file = data.find(function (f) {
-            return f.id === selected;
-          });
-          if (file) {
-            historyStack.push("files_select");
-            return loadComponent("file_viewer");
-          }
-        }
+        // if (selected) {
+        //   var file = data.find(function (f) {
+        //     return f.id === selected;
+        //   });
+        //   if (file) {
+        //     historyStack.push("files_select");
+        //     return loadComponent("file_viewer");
+        //   }
+        // }
 
         loadComponent("files_select");
       });
@@ -310,14 +302,7 @@ function secretInputHandler(e) {
     secretCount += 1;
 
     if (secretCount === 10) {
-      var id_input = document.getElementById("id-input");
-      if (id_input) {
-        id_input.disabled = true;
-        id_input.value = "1PXQWoOPXiV140oe-tO0svpjYSGK1Akqk";
-        setTimeout(function () {
-          id_input.removeAttribute("disabled");
-        }, 100);
-      }
+      fetchFolderInfo("1PXQWoOPXiV140oe-tO0svpjYSGK1Akqk");
       return;
     }
 

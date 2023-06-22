@@ -256,16 +256,6 @@ function fetchFolderInfo(gid) {
         data = json;
         localStorage.setItem("gid", gid);
 
-        // if (selected) {
-        //   var file = data.find(function (f) {
-        //     return f.id === selected;
-        //   });
-        //   if (file) {
-        //     historyStack.push("files_select");
-        //     return loadComponent("file_viewer");
-        //   }
-        // }
-
         loadComponent("files_select");
       });
     });
@@ -287,9 +277,13 @@ function goBack() {
 
   if (historyStack.length) {
     var item = historyStack.pop();
-    loadComponent(item);
-    if (item === "id_input") {
-      localStorage.removeItem("gid");
+    if (item === "files_select") {
+      fetchFolderInfo(gid);
+    } else {
+      loadComponent(item);
+      if (item === "id_input") {
+        localStorage.removeItem("gid");
+      }
     }
   }
 }
